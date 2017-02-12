@@ -3,6 +3,8 @@ html, body {
   font-weight: 100;
   margin: 0;
   padding: 0;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 html {
@@ -25,7 +27,7 @@ body {
 }
 
 h1 {
-  color: rgba(0, 0, 0, 0.25);
+  color: rgba(0, 0, 0, 0.65);
   font-size: 12px;
   font-style: italic;
   font-weight: 100;
@@ -67,7 +69,7 @@ h1 {
 }
 
 #play-button .speakers-on-text {
-  color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.3);
   display: block;
   font-size: 11px;
   line-height: 1em;
