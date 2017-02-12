@@ -2,4 +2,4 @@
 
 A simple experiment with color, movement, and sound.
 
-[Le Demo](https://s3.amazonaws.com/droplets-experiment/index.html) For best experience, use Chrome (of course).
+__[Le Demo](https://s3.amazonaws.com/droplets-experiment/index.html).__ For best experience, use Chrome (of course).
