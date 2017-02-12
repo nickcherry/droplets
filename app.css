@@ -1,0 +1,259 @@
+html, body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 100;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height:  100%;
+}
+
+body {
+  min-height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+#intro {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}
+
+h1 {
+  color: rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 100;
+  letter-spacing: 1px;
+  margin-top: 150px;
+  text-align: center;
+  transition: opacity 0.3s ease-out;
+  user-select: none;
+}
+
+#play-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: block;
+  height: 120px;
+  margin: 30px auto;
+  outline: none;
+  position: relative;
+  text-align: center;
+  width: 120px;
+}
+
+#play-button .text {
+  border-bottom: 1px solid white;
+  color: rgba(0, 0, 0, 0.8);
+  display: inline-block;
+  font-size: 30px;
+  font-variant: small-caps;
+  letter-spacing: 3px;
+  line-height: 1em;
+  margin-top: 38px;
+  position: relative;
+  text-indent: 3px;
+  transition: all 0.5s ease-out;
+  user-select: none;
+  z-index: 102;
+}
+
+#play-button .icon {
+  display: block;
+  height: 18px;
+  margin: 6px auto;
+  opacity: 0.1;
+  position: relative;
+  transition: all 0.5s ease-out;
+  user-select: none;
+  width: 20px;
+  z-index: 102;
+}
+
+#play-button::before {
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08);
+  content: ' ';
+  display: block;
+  height: 120px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform-origin: center;
+  transition: all 0.5s ease-out;
+  width: 120px;
+  z-index: 101;
+}
+
+#play-button:hover .text {
+  border-bottom: 1px solid #e5b217;
+  color: rgba(0, 0, 0, 1);
+}
+
+#play-button:hover .icon {
+  opacity: 0.4;
+}
+
+#play-button:hover::before {
+  background-color: #FFCC33;
+  transform: scale(1.35);
+}
+
+body.playing h1 {
+  opacity: 0;
+}
+
+body.playing #play-button .icon {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+body.playing #play-button .text {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+body.playing #play-button::before {
+  color: white;
+  opacity: 0;
+  transform: scale(4.75);
+  transition: all 1.5s ease-out;
+}
+
+#droplets-wrapper {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 50;
+}
+
+#droplets {
+  align-content: stretch;
+  align-items: stretch;
+  animation: spin-droplets 12s infinite forwards linear;
+  backface-visibility: hidden;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  justify-content: flex-start;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate3d(0, 0, 0); /* force hardware acceleration */
+  transition: opacity 0.35s ease-out;
+}
+
+body.playing #droplets {
+  opacity: 1;
+}
+
+.row {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.cell {
+  box-sizing: border-box;
+  flex: 1;
+  height: 100%;
+  position: relative;
+}
+
+.row:not(:last-of-type) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.035);
+}
+
+.row .cell:not(:last-of-type) {
+  border-right: 1px solid rgba(0, 0, 0, 0.035);
+}
+
+.droplet {
+  backface-visibility: hidden;
+  border-radius: 50%;
+  height: 600px;
+  left: 50%;
+  margin-left: -250px;
+  margin-top: -250px;
+  position: absolute;
+  top: 50%;
+  width: 600px;
+}
+
+.droplet::after {
+  background: white;
+  border-radius: 50%;
+  content: ' ';
+  display: block;
+  height: 20px;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  opacity: 0.25;
+  position: absolute;
+  top: 50%;
+  width: 20px;
+}
+
+.droplet.up {
+  /* animation duration should be equivalent to DROPLET_ANIMATION_DURATION */
+  animation: fade-out 5s normal forwards ease-out, bloom-up 5s normal forwards ease-out;
+}
+
+.droplet.right {
+  /* animation duration should be equivalent to DROPLET_ANIMATION_DURATION */
+  animation: fade-out 5s normal forwards ease-out, bloom-right 5s normal forwards ease-out;
+}
+
+.droplet.down {
+  /* animation duration should be equivalent to DROPLET_ANIMATION_DURATION */
+  animation: fade-out 5s normal forwards ease-out, bloom-down 5s normal forwards ease-out;
+}
+
+.droplet.left {
+  /* animation duration should be equivalent to DROPLET_ANIMATION_DURATION */
+  animation: fade-out 5s normal forwards ease-out, bloom-left 5s normal forwards ease-out;
+}
+
+@keyframes spin-droplets {
+  0% { transform: rotate3d(0, 0, 0, 0deg); }
+  100% { transform: rotate3d(0, 0, 1, 359deg); }
+}
+
+@keyframes fade-out {
+  0% { opacity: 1; }
+  25% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes bloom-up {
+  0% { transform: scale(0.01); }
+  100% { transform: scale(1) translate3d(0, -120px, 0); }
+}
+
+@keyframes bloom-right {
+  0% { transform: scale(0.01); }
+  100% { transform: scale(1) translate3d(120px, 0, 0); }
+}
+
+@keyframes bloom-down {
+  0% { transform: scale(0.01); }
+  100% { transform: scale(1) translateY(0, 120px, 0); }
+}
+
+@keyframes bloom-left {
+  0% { transform: scale(0.01); }
+  100% { transform: scale(1) translate3d(-120px, 0, 0); }
+}
