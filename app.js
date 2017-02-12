@@ -8,7 +8,7 @@ const DROPLETS_ID = 'droplets';
 const INTRO_ID = 'intro';
 const PLAY_BUTTON_ID = 'play-button';
 
-const MAX_SIMULTANEOUS_CURSORS = 3;
+const MAX_SIMULTANEOUS_CURSORS = 4;
 
 const TICK_INTERVAL = 10;
 const PLAY_BUTTON_ANIMATION_DURATION = 1500; // in milliseconds; should be equivalent to duration of fade-out css transition;
