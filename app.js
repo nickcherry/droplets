@@ -124,7 +124,6 @@ function drawDroplet(cursor) {
   else if (cursor.yVel > 0) yVelClass = 'down';
 
   dropletEl.className = 'droplet ' + (xVelClass || '') + ' ' + (yVelClass || '');
-  console.log(dropletEl.className)
   dropletEl.style['background-color'] = getRandomColor();
   dropletEl.style['z-index'] = time;
   setTimeout(function() {
