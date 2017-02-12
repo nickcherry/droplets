@@ -58,8 +58,9 @@ h1 {
   letter-spacing: 3px;
   line-height: 1em;
   margin-top: 38px;
+  padding-bottom: 2px;
   position: relative;
-  text-indent: 3px;
+  text-indent: 4px;
   transition: all 0.5s ease-out;
   user-select: none;
   z-index: 102;
@@ -69,6 +70,7 @@ h1 {
   display: block;
   height: 18px;
   margin: 6px auto;
+  padding-left: 2px;
   opacity: 0.1;
   position: relative;
   transition: all 0.5s ease-out;
@@ -94,7 +96,7 @@ h1 {
 }
 
 #play-button:hover .text {
-  border-bottom: 1px solid #e5b217;
+  border-bottom: 1px solid #f2c02c;
   color: rgba(0, 0, 0, 1);
 }
 
@@ -103,7 +105,7 @@ h1 {
 }
 
 #play-button:hover::before {
-  background-color: #FFCC33;
+  background-color: #ffcc33;
   transform: scale(1.35);
 }
 
@@ -129,18 +131,19 @@ body.playing #play-button::before {
 }
 
 #droplets-wrapper {
-  bottom: 0;
-  left: 0;
+  bottom: 100px;
+  left: 100px;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 100px;
+  top: 100px;
   z-index: 50;
 }
 
 #droplets {
   align-content: stretch;
   align-items: stretch;
-  animation: spin-droplets 12s infinite forwards linear;
+  /* animation: spin-droplets 15s infinite forwards linear; */
+  background: white;
   backface-visibility: hidden;
   bottom: 0;
   display: flex;
@@ -209,22 +212,22 @@ body.playing #droplets {
 
 .droplet.up {
   /* animation duration should be equivalent to DROPLET_ANIMATION_DURATION */
-  animation: fade-out 5s normal forwards ease-out, bloom-up 5s normal forwards ease-out;
+  animation: fade-out 4s normal forwards ease-out, bloom-up 4s normal forwards ease-out;
 }
 
 .droplet.right {
   /* animation duration should be equivalent to DROPLET_ANIMATION_DURATION */
-  animation: fade-out 5s normal forwards ease-out, bloom-right 5s normal forwards ease-out;
+  animation: fade-out 4s normal forwards ease-out, bloom-right 4s normal forwards ease-out;
 }
 
 .droplet.down {
   /* animation duration should be equivalent to DROPLET_ANIMATION_DURATION */
-  animation: fade-out 5s normal forwards ease-out, bloom-down 5s normal forwards ease-out;
+  animation: fade-out 4s normal forwards ease-out, bloom-down 4s normal forwards ease-out;
 }
 
 .droplet.left {
   /* animation duration should be equivalent to DROPLET_ANIMATION_DURATION */
-  animation: fade-out 5s normal forwards ease-out, bloom-left 5s normal forwards ease-out;
+  animation: fade-out 4s normal forwards ease-out, bloom-left 4s normal forwards ease-out;
 }
 
 @keyframes spin-droplets {
@@ -234,7 +237,7 @@ body.playing #droplets {
 
 @keyframes fade-out {
   0% { opacity: 1; }
-  25% { opacity: 1; }
+  50% { opacity: 1; }
   100% { opacity: 0; }
 }
 

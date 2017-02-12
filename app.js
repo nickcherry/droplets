@@ -18,11 +18,14 @@ const MOVE_CURSOR_MAX_INTERVAL = 2000 / TICK_INTERVAL;
 const DROPLET_ANIMATION_DURATION = 5000; // in milliseconds; should be equivalent to duration of fade-out css animation
 
 const COLORS = [
-  '#CC3333', // red
-  '#560764', // purple
-  '#251db4', // blue
-  '#a3e496', // mint green
-  '#FFCC33', // yellow,
+  '#251db4', // persian blue
+  '#1ecfd6', // java
+  '#118c8b', // blue chill
+  '#ffcc33', // sunglow
+  '#560764', // clairvoyant
+  '#f71b78', // rose
+  '#ba0000', // guardsman red
+  '#8b81e2', // medium purple
 ];
 
 
@@ -191,7 +194,7 @@ function onTick() {
 
 function onPlayClick() {
   playing = true;
-  document.getElementById(AUDIO_ID).play();
+  // document.getElementById(AUDIO_ID).play();
   document.body.className += ' playing';
   setTimeout(resetAnimation, 1000);
   document.getElementById(PLAY_BUTTON_ID).removeEventListener('click', onPlayClick);
