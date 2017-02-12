@@ -8,13 +8,13 @@ const DROPLETS_ID = 'droplets';
 const INTRO_ID = 'intro';
 const PLAY_BUTTON_ID = 'play-button';
 
-const MAX_SIMULTANEOUS_CURSORS = 5;
+const MAX_SIMULTANEOUS_CURSORS = 3;
 
 const TICK_INTERVAL = 10;
 const PLAY_BUTTON_ANIMATION_DURATION = 1500; // in milliseconds; should be equivalent to duration of fade-out css transition;
-const SPAWN_CURSOR_INTERVAL = 6000 / TICK_INTERVAL;
-const MOVE_CURSOR_MIN_INTERVAL = 750 / TICK_INTERVAL;
-const MOVE_CURSOR_MAX_INTERVAL = 2000 / TICK_INTERVAL;
+const INITIAL_ANIMATION_DELAY_DURATION = 950;
+const MOVE_CURSOR_INTERVAL = 1680 / TICK_INTERVAL;
+const SPAWN_CURSOR_INTERVAL = MOVE_CURSOR_INTERVAL * 3;
 const DROPLET_ANIMATION_DURATION = 5000; // in milliseconds; should be equivalent to duration of fade-out css animation
 
 const COLORS = [
@@ -46,10 +46,6 @@ function getRandomInt(min, max) {
 
 function getRandomColor() {
   return COLORS[getRandomInt(0, COLORS.length - 1)];
-}
-
-function getRandomMoveInterval() {
-  return getRandomInt(MOVE_CURSOR_MIN_INTERVAL, MOVE_CURSOR_MAX_INTERVAL);
 }
 
 function getRandomEdgeCellAndVelocities() {
@@ -128,6 +124,7 @@ function drawDroplet(cursor) {
   else if (cursor.yVel > 0) yVelClass = 'down';
 
   dropletEl.className = 'droplet ' + (xVelClass || '') + ' ' + (yVelClass || '');
+  console.log(dropletEl.className)
   dropletEl.style['background-color'] = getRandomColor();
   dropletEl.style['z-index'] = time;
   setTimeout(function() {
@@ -144,7 +141,7 @@ function spawnCursor() {
   cursor = {
     column,
     row,
-    ticksUntilNextMove: getRandomMoveInterval(),
+    ticksUntilNextMove: MOVE_CURSOR_INTERVAL,
     xVel,
     yVel,
   };
@@ -160,21 +157,35 @@ function moveCursor(cursor) {
     [ cursor.row + 1, cursor.column ], // down
     [ cursor.row, cursor.column - 1 ] // left
   ];
-  const destinationIndex = getRandomInt(0, 10);
-  if (destinationIndex >= 4) {
-    // Cheap way to get a "weighted average", favoring current momentum
-    [row, column] = [cursor.row + cursor.yVel, cursor.column + cursor.xVel];
-  } else {
-    [row, column] = potentialDestinations[destinationIndex];
-    cursor.xVel = column - cursor.column;
-    cursor.yVel = row - cursor.row;
+
+  function getDestination() {
+    const destinationIndex = getRandomInt(0, 6);
+    if (destinationIndex >= 4) {
+      // Cheap way to get a "weighted average", favoring current momentum
+      return [cursor.row + cursor.yVel, cursor.column + cursor.xVel];
+    } else {
+      return potentialDestinations[destinationIndex];
+    }
   }
+
+  function isDestinationOppositeCurrentMomentum(row, column) {
+    return column - cursor.column === -cursor.xVel &&
+      row - cursor.row === -cursor.yVel;
+  }
+
+  do {
+    [row, column] = getDestination();
+  } while(isDestinationOppositeCurrentMomentum(row, column));
+
+  cursor.xVel = column - cursor.column;
+  cursor.yVel = row - cursor.row;
   [cursor.row, cursor.column] = [row, column];
+
   if (cursor.row < 0 || cursor.row >= rowCount || cursor.column < 0 || cursor.column >= columnCount) {
     cursors.splice(cursors.indexOf(cursor), 1);
   } else {
     drawDroplet(cursor);
-    cursor.ticksUntilNextMove = getRandomMoveInterval();
+    cursor.ticksUntilNextMove = MOVE_CURSOR_INTERVAL;
   }
 }
 
@@ -194,9 +205,9 @@ function onTick() {
 
 function onPlayClick() {
   playing = true;
-  // document.getElementById(AUDIO_ID).play();
+  document.getElementById(AUDIO_ID).play();
   document.body.className += ' playing';
-  setTimeout(resetAnimation, 1000);
+  setTimeout(resetAnimation, INITIAL_ANIMATION_DELAY_DURATION);
   document.getElementById(PLAY_BUTTON_ID).removeEventListener('click', onPlayClick);
   setTimeout(function() {
     document.getElementById(INTRO_ID).remove();

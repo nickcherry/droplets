@@ -170,9 +170,12 @@ body.playing #droplets {
 
 .cell {
   box-sizing: border-box;
+  display: block;
   flex: 1;
   height: 100%;
   position: relative;
+  text-align: center;
+  width: 0; /* ensure equal width columns */
 }
 
 .row:not(:last-of-type) {
@@ -188,10 +191,11 @@ body.playing #droplets {
   border-radius: 50%;
   height: 600px;
   left: 50%;
-  margin-left: -250px;
-  margin-top: -250px;
+  margin-left: -300px;
+  margin-top: -300px;
   position: absolute;
   top: 50%;
+  transform-origin: center;
   width: 600px;
 }
 
@@ -243,20 +247,24 @@ body.playing #droplets {
 
 @keyframes bloom-up {
   0% { transform: scale(0.01); }
+  10% { transform: scale(0.01); }
   100% { transform: scale(1) translate3d(0, -120px, 0); }
 }
 
 @keyframes bloom-right {
   0% { transform: scale(0.01); }
+  10% { transform: scale(0.01); }
   100% { transform: scale(1) translate3d(120px, 0, 0); }
 }
 
 @keyframes bloom-down {
   0% { transform: scale(0.01); }
-  100% { transform: scale(1) translateY(0, 120px, 0); }
+  10% { transform: scale(0.01); }
+  100% { transform: scale(1) translate3d(0, 120px, 0); }
 }
 
 @keyframes bloom-left {
   0% { transform: scale(0.01); }
+  10% { transform: scale(0.01); }
   100% { transform: scale(1) translate3d(-120px, 0, 0); }
 }
