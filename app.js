@@ -196,7 +196,6 @@ function onTick() {
     spawnCursor();
   }
   cursors.forEach(function(cursor) {
-    console.log(cursor.ticksUntilNextMove)
     if (--cursor.ticksUntilNextMove === 0) {
       moveCursor(cursor);
     }
