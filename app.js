@@ -98,11 +98,12 @@ function calculateGridMeasurements() {
 
 function drawGrid() {
   calculateGridMeasurements()
-  let i, j, html = '';
+  let i, j, html = '', rowHeight;
+  rowHeight = document.body.clientHeight / rowCount;
   for (i = 0; i < rowCount; i++) {
     html += '<div class="row" id="row-' + i + '">';
     for (j = 0; j < columnCount; j++) {
-      html += '<div class="cell" id="cell-' + i + '-' + j + '"></div>';
+      html += '<div class="cell" id="cell-' + i + '-' + j + '" style="height: ' + rowHeight + 'px;"></div>';
     }
     html += '</div>';
   }
