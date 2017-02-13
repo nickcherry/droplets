@@ -14,7 +14,7 @@ const TICK_INTERVAL = 10;
 const PLAY_BUTTON_ANIMATION_DURATION = 1500; // in milliseconds; should be equivalent to duration of fade-out css transition;
 const INITIAL_ANIMATION_DELAY_DURATION = 950;
 const MOVE_CURSOR_INTERVAL = Math.round(1700 / TICK_INTERVAL);
-const SPAWN_CURSOR_INTERVAL = MOVE_CURSOR_INTERVAL * 3;
+const SPAWN_CURSOR_INTERVAL = MOVE_CURSOR_INTERVAL * 4;
 const DROPLET_ANIMATION_DURATION = 5000; // in milliseconds; should be equivalent to duration of fade-out css animation
 
 const COLORS = [
@@ -149,7 +149,7 @@ function spawnCursor() {
   cursors.push(cursor);
 }
 
-function moveCursor(cursor) {
+function moveCursor(cursor, previousAttempts = 0) {
   let row, column;
   const potentialDestinations = [
     [ cursor.row - 1, cursor.column ], // up
@@ -159,7 +159,7 @@ function moveCursor(cursor) {
   ];
 
   function getDestination() {
-    const destinationIndex = getRandomInt(0, 6);
+    const destinationIndex = getRandomInt(0, 5);
     if (destinationIndex >= 4) {
       // Cheap way to get a "weighted average", favoring current momentum
       return [cursor.row + cursor.yVel, cursor.column + cursor.xVel];
@@ -177,13 +177,16 @@ function moveCursor(cursor) {
     [row, column] = getDestination();
   } while(isDestinationOppositeCurrentMomentum(row, column));
 
-  cursor.xVel = column - cursor.column;
-  cursor.yVel = row - cursor.row;
-  [cursor.row, cursor.column] = [row, column];
-
-  if (cursor.row < 0 || cursor.row >= rowCount || cursor.column < 0 || cursor.column >= columnCount) {
-    cursors.splice(cursors.indexOf(cursor), 1);
+  if (row < 0 || row >= rowCount || column < 0 || column >= columnCount) {
+    if (previousAttempts < 2) {
+      moveCursor(cursor, previousAttempts + 1);
+    } else {
+      cursors.splice(cursors.indexOf(cursor), 1);
+    }
   } else {
+    cursor.xVel = column - cursor.column;
+    cursor.yVel = row - cursor.row;
+    [cursor.row, cursor.column] = [row, column];
     drawDroplet(cursor);
     cursor.ticksUntilNextMove = MOVE_CURSOR_INTERVAL;
   }
