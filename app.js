@@ -13,7 +13,7 @@ const MAX_SIMULTANEOUS_CURSORS = 4;
 const TICK_INTERVAL = 10;
 const PLAY_BUTTON_ANIMATION_DURATION = 1500; // in milliseconds; should be equivalent to duration of fade-out css transition;
 const INITIAL_ANIMATION_DELAY_DURATION = 950;
-const MOVE_CURSOR_INTERVAL = 1686 / TICK_INTERVAL;
+const MOVE_CURSOR_INTERVAL = Math.round(1686 / TICK_INTERVAL);
 const SPAWN_CURSOR_INTERVAL = MOVE_CURSOR_INTERVAL * 3;
 const DROPLET_ANIMATION_DURATION = 5000; // in milliseconds; should be equivalent to duration of fade-out css animation
 
@@ -196,6 +196,7 @@ function onTick() {
     spawnCursor();
   }
   cursors.forEach(function(cursor) {
+    console.log(cursor.ticksUntilNextMove)
     if (--cursor.ticksUntilNextMove === 0) {
       moveCursor(cursor);
     }
