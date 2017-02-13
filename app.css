@@ -48,6 +48,7 @@ h1 {
   outline: none;
   position: relative;
   text-align: center;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
   width: 140px;
 }
 
