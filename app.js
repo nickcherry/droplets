@@ -223,6 +223,9 @@ function onResize() {
 
 function init() {
   drawGrid();
+  document.ontouchmove = function(event){
+    event.preventDefault(); // prevent scrolling in mobile safari
+  }
   document.getElementById(PLAY_BUTTON_ID).addEventListener('click', onPlayClick);
   window.addEventListener('resize', onResize);
   document.removeEventListener('DOMContentLoaded', init);
