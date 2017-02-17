@@ -59,7 +59,6 @@ function getRandomEdgeCellAndVelocities() {
     case 3: // Left
       return [getRandomInt(0, rowCount - 1), 0, 1, 0];
   }
-  return [getRandomInt(0, rowCount - 1), getRandomInt(0, columnCount - 1)];
 }
 
 function isCellOccupied(row, column) {
